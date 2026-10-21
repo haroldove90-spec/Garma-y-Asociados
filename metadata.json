@@ -1,0 +1,6 @@
+{
+  "name": "Garma y Asociados",
+  "description": "Sistema Integral de Microcréditos y Cobranza - Garma y Asociados",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "/",
+  "name": "Garma y Asociados",
+  "short_name": "Garma",
+  "description": "Sistema Integral de Microcréditos y Cobranza - Garma y Asociados",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C42326",
+  "icons": [
+    {
+      "src": "https://appdesignproyectos.com/garmaicono.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://appdesignproyectos.com/garmaicono.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://appdesignproyectos.com/garmaicono.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
