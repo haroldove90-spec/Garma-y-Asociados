@@ -53,6 +53,9 @@ export const CobradorView: React.FC<CobradorViewProps> = ({
   onClientAdded,
   onViewReceipt
 }) => {
+  // Safe active module fallback
+  const currentModule = ['cobranza', 'clientes', 'saldos'].includes(activeModule) ? activeModule : 'cobranza';
+
   // Day filter for today's collection agenda
   const [selectedDay, setSelectedDay] = useState<PaymentDay>('Miércoles');
   const [searchQuery, setSearchQuery] = useState('');
@@ -267,9 +270,9 @@ export const CobradorView: React.FC<CobradorViewProps> = ({
         <div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
             <span className="w-2.5 h-6 bg-[#C42326] rounded-full inline-block" />
-            {activeModule === 'cobranza' && 'Ruta y Cobranza Diaria'}
-            {activeModule === 'clientes' && 'Directorio de Clientes y Avales'}
-            {activeModule === 'saldos' && 'Consulta de Saldos y Cuentas'}
+            {currentModule === 'cobranza' && 'Ruta y Cobranza Diaria'}
+            {currentModule === 'clientes' && 'Directorio de Clientes y Avales'}
+            {currentModule === 'saldos' && 'Consulta de Saldos y Cuentas'}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             Captura ágil en campo o ventanilla • Garma y Asociados
@@ -332,7 +335,7 @@ export const CobradorView: React.FC<CobradorViewProps> = ({
       </div>
 
       {/* SECTION 1: COBRANZA DIARIA (Ruta del Día) */}
-      {(activeModule === 'cobranza' || activeModule === 'saldos') && (
+      {currentModule === 'cobranza' && (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           {/* Filter Bar */}
           <div className="p-4 border-b border-slate-200 bg-slate-50/70 flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -490,8 +493,151 @@ export const CobradorView: React.FC<CobradorViewProps> = ({
         </div>
       )}
 
+      {/* SECTION: CONSULTA DE SALDO POR CLIENTE */}
+      {currentModule === 'saldos' && (
+        <div className="space-y-4">
+          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <Search className="w-5 h-5 text-[#C42326]" />
+                  <span>Consulta de Saldos y Cuentas por Cliente</span>
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Desglose de cuota esperada, abonos aplicados, pago faltante del día y saldo vencido
+                </p>
+              </div>
+
+              {/* Instant Search Bar */}
+              <div className="relative w-full sm:w-80">
+                <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Buscar titular, folio o teléfono..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-[#C42326] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Balances Cards Grid */}
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {branchClients
+                .filter(c => {
+                  if (!searchQuery) return true;
+                  const q = searchQuery.toLowerCase();
+                  return (
+                    c.nombreCompleto.toLowerCase().includes(q) ||
+                    c.telefono.includes(q) ||
+                    c.giroNegocio.toLowerCase().includes(q)
+                  );
+                })
+                .map(client => {
+                  const contract = contracts.find(ct => ct.clienteId === client.id && ct.estatus !== 'Liquidado');
+                  const clientTx = transactions.filter(t => t.clienteId === client.id);
+                  const abonosRealizados = clientTx.reduce((acc, t) => acc + t.montoPagado, 0);
+                  const paidToday = clientTx.some(t => t.fecha.startsWith('2026-10-21'));
+                  const cuotaEsperada = contract?.cuotaPeriodica || 0;
+                  const pagoFaltanteHoy = paidToday ? 0 : cuotaEsperada;
+                  const saldoVencido = contract?.saldoVencido || 0;
+                  const saldoInsoluto = contract?.saldoPendiente || 0;
+
+                  return (
+                    <div
+                      key={client.id}
+                      className="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 shadow-xs flex flex-col justify-between space-y-3"
+                    >
+                      {/* Top Titular & Status */}
+                      <div>
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <span className="text-[10px] font-bold uppercase text-slate-400">{client.giroNegocio}</span>
+                            <h4 className="text-sm font-bold text-slate-900">{client.nombreCompleto}</h4>
+                            <p className="text-[11px] text-slate-500">Tel: {client.telefono} • Cobro: {client.diaAsignadoPago}</p>
+                          </div>
+                          {contract ? (
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              saldoVencido > 0 
+                                ? 'bg-red-100 text-red-900' 
+                                : paidToday 
+                                ? 'bg-emerald-100 text-emerald-800' 
+                                : 'bg-amber-100 text-amber-900'
+                            }`}>
+                              {saldoVencido > 0 ? 'Con Mora' : (paidToday ? 'Al Corriente' : 'Pago Faltante')}
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">
+                              Sin Crédito
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Balance Breakdown Grid */}
+                        {contract ? (
+                          <div className="mt-3 grid grid-cols-2 gap-2 text-xs bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                            <div>
+                              <span className="text-[10px] text-slate-500 uppercase font-semibold block">Cuota Esperada:</span>
+                              <span className="font-bold text-slate-900 font-mono">${cuotaEsperada.toFixed(2)}</span>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-slate-500 uppercase font-semibold block">Abonos Totales:</span>
+                              <span className="font-bold text-emerald-700 font-mono">${abonosRealizados.toFixed(2)}</span>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-slate-500 uppercase font-semibold block">Faltante Hoy:</span>
+                              <span className={`font-bold font-mono ${pagoFaltanteHoy > 0 ? 'text-[#F07D08]' : 'text-slate-400'}`}>
+                                ${pagoFaltanteHoy.toFixed(2)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-slate-500 uppercase font-semibold block">Saldo Vencido (Mora):</span>
+                              <span className={`font-bold font-mono ${saldoVencido > 0 ? 'text-[#C42326]' : 'text-slate-400'}`}>
+                                ${saldoVencido.toFixed(2)}
+                              </span>
+                            </div>
+                          </div>
+                        ) : null}
+
+                        {contract && (
+                          <div className="mt-2 text-xs flex justify-between items-center text-slate-600 font-medium pt-1">
+                            <span>Saldo Insoluto Restante:</span>
+                            <span className="font-mono font-black text-[#C42326] text-sm">${saldoInsoluto.toFixed(2)}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Action */}
+                      <div className="pt-2 border-t flex items-center justify-between">
+                        <span className="text-[10px] text-slate-400 font-mono">
+                          {contract ? `Contrato: ${contract.folio}` : 'Expediente libre'}
+                        </span>
+                        {contract && !paidToday ? (
+                          <button
+                            onClick={() => handleOpenPay(client, contract)}
+                            className="px-3 py-1.5 bg-[#C42326] hover:bg-[#a51c1f] text-white text-xs font-bold rounded-lg transition active:scale-95 cursor-pointer"
+                          >
+                            Cobrar
+                          </button>
+                        ) : clientTx.length > 0 ? (
+                          <button
+                            onClick={() => onViewReceipt(clientTx[0])}
+                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition cursor-pointer"
+                          >
+                            Último Recibo
+                          </button>
+                        ) : null}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* SECTION 2: CLIENTES Y AVALES DIRECTORY TABLE */}
-      {activeModule === 'clientes' && (
+      {currentModule === 'clientes' && (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           <div className="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <h3 className="text-base font-bold text-slate-900">

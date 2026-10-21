@@ -52,6 +52,9 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
   onCashCutCompleted,
   onViewContract
 }) => {
+  // Safe active module fallback
+  const currentModule = ['simulador', 'arqueo', 'cartera', 'clientes'].includes(activeModule) ? activeModule : 'simulador';
+
   // Current active branch name
   const currentBranch = branches.find(b => b.id === activeBranchId) || branches[0];
 
@@ -238,10 +241,10 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
         <div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
             <span className="w-2.5 h-6 bg-[#C42326] rounded-full inline-block" />
-            {activeModule === 'simulador' && 'Simulador y Apertura de Créditos'}
-            {activeModule === 'arqueo' && 'Corte y Arqueo Diario de Caja'}
-            {activeModule === 'cartera' && 'Monitoreo Local de Cartera y Mora'}
-            {activeModule === 'clientes' && 'Contratos y Expedientes de Sucursal'}
+            {currentModule === 'simulador' && 'Simulador y Apertura de Créditos'}
+            {currentModule === 'arqueo' && 'Corte y Arqueo Diario de Caja'}
+            {currentModule === 'cartera' && 'Monitoreo Local de Cartera y Mora'}
+            {currentModule === 'clientes' && 'Contratos y Expedientes de Sucursal'}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             Gerencia Operativa • {currentBranch.nombre} ({currentBranch.gerenteEncargado})
@@ -299,7 +302,7 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
       </div>
 
       {/* MODULE 1: SIMULADOR Y APERTURA DE CRÉDITOS */}
-      {activeModule === 'simulador' && (
+      {currentModule === 'simulador' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Simulator Inputs Form */}
           <div className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
@@ -547,7 +550,7 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
       )}
 
       {/* MODULE 2: CORTE Y ARQUEO DE CAJA DIARIO */}
-      {activeModule === 'arqueo' && (
+      {currentModule === 'arqueo' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Arqueo Form & Confrontation */}
           <div className="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
@@ -689,7 +692,7 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
       )}
 
       {/* MODULE 3: MONITOREO LOCAL DE CARTERA Y CRÉDITOS EN MORA */}
-      {(activeModule === 'cartera' || activeModule === 'clientes') && (
+      {currentModule === 'cartera' && (
         <div className="space-y-4">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
             <div className="p-4 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -764,6 +767,99 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
                     <tr>
                       <td colSpan={7} className="py-8 text-center text-slate-400">
                         No hay créditos en mora o atraso en esta sucursal.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODULE 4: EXPEDIENTES DE CRÉDITO Y CLIENTES DE SUCURSAL */}
+      {currentModule === 'clientes' && (
+        <div className="space-y-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+            <div className="p-4 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-[#C42326]" />
+                  <span>Expedientes de Contratos y Clientes de Sucursal</span>
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Consulta de contratos vigentes, avales y tablas de amortización emitidas
+                </p>
+              </div>
+              <span className="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">
+                Total: {branchContracts.length} contratos
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-600 uppercase font-semibold border-b">
+                  <tr>
+                    <th className="py-3 px-4">Folio</th>
+                    <th className="py-3 px-4">Acreditado (Titular)</th>
+                    <th className="py-3 px-4">Monto Prestado</th>
+                    <th className="py-3 px-4">Plazo & Frecuencia</th>
+                    <th className="py-3 px-4 text-right">Cuota Periódica</th>
+                    <th className="py-3 px-4 text-right">Saldo Restante</th>
+                    <th className="py-3 px-4 text-center">Estatus</th>
+                    <th className="py-3 px-4 text-center">Contrato Oficial</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-mono">
+                  {branchContracts.map((ct) => {
+                    const client = clients.find(c => c.id === ct.clienteId);
+                    return (
+                      <tr key={ct.id} className="hover:bg-slate-50">
+                        <td className="py-3 px-4 font-bold text-slate-900">{ct.folio}</td>
+                        <td className="py-3 px-4 font-sans font-semibold text-slate-800">
+                          <div>{client?.nombreCompleto || 'Desconocido'}</div>
+                          <div className="text-[11px] text-slate-500 font-mono">Aval: {client?.aval.nombreCompleto}</div>
+                        </td>
+                        <td className="py-3 px-4 text-slate-800">
+                          ${ct.montoSolicitado.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                        </td>
+                        <td className="py-3 px-4 font-sans text-slate-600">
+                          {ct.plazoSemanas} sem ({ct.frecuencia}) • {ct.diaPago}
+                        </td>
+                        <td className="py-3 px-4 text-right font-bold text-slate-900">
+                          ${ct.cuotaPeriodica.toFixed(2)}
+                        </td>
+                        <td className="py-3 px-4 text-right font-bold text-[#C42326]">
+                          ${ct.saldoPendiente.toFixed(2)}
+                        </td>
+                        <td className="py-3 px-4 text-center font-sans">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            ct.estatus === 'Liquidado'
+                              ? 'bg-blue-100 text-blue-800'
+                              : ct.estatus === 'En Mora'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-emerald-100 text-emerald-800'
+                          }`}>
+                            {ct.estatus}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-center font-sans">
+                          {client && (
+                            <button
+                              onClick={() => onViewContract(ct, client)}
+                              className="px-2.5 py-1 bg-[#000000] hover:bg-zinc-800 text-white font-semibold rounded text-xs transition cursor-pointer"
+                            >
+                              Ver / Imprimir
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {branchContracts.length === 0 && (
+                    <tr>
+                      <td colSpan={8} className="py-8 text-center text-slate-400 font-sans">
+                        No hay contratos registrados en esta sucursal.
                       </td>
                     </tr>
                   )}

@@ -31,6 +31,7 @@ interface SidebarProps {
 export interface NavItem {
   id: string;
   label: string;
+  shortLabel: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string;
 }
@@ -39,29 +40,29 @@ export function getRoleNavItems(role: UserRole): NavItem[] {
   switch (role) {
     case 'cobrador':
       return [
-        { id: 'cobranza', label: 'Cobranza Diaria', icon: BadgeDollarSign, badge: 'Hoy' },
-        { id: 'clientes', label: 'Directorio y Registro', icon: Users },
-        { id: 'saldos', label: 'Consulta de Saldos', icon: Search },
+        { id: 'cobranza', label: 'Cobranza Diaria', shortLabel: 'Cobranza', icon: BadgeDollarSign, badge: 'Hoy' },
+        { id: 'clientes', label: 'Directorio y Registro', shortLabel: 'Directorio', icon: Users },
+        { id: 'saldos', label: 'Consulta de Saldos', shortLabel: 'Saldos', icon: Search },
       ];
     case 'gerente':
       return [
-        { id: 'simulador', label: 'Simulador y Créditos', icon: Calculator },
-        { id: 'arqueo', label: 'Corte y Arqueo de Caja', icon: Scale },
-        { id: 'cartera', label: 'Monitoreo de Cartera', icon: PieChart },
-        { id: 'clientes', label: 'Clientes y Avales', icon: Users },
+        { id: 'simulador', label: 'Simulador y Créditos', shortLabel: 'Simulador', icon: Calculator },
+        { id: 'arqueo', label: 'Corte y Arqueo de Caja', shortLabel: 'Arqueo', icon: Scale },
+        { id: 'cartera', label: 'Monitoreo de Cartera', shortLabel: 'Mora', icon: PieChart },
+        { id: 'clientes', label: 'Contratos de Sucursal', shortLabel: 'Contratos', icon: Users },
       ];
     case 'admin':
       return [
-        { id: 'global', label: 'Tablero Global', icon: PieChart },
-        { id: 'sucursales', label: 'Sucursales y Usuarios', icon: Building },
-        { id: 'reportes', label: 'Reportes y Auditoría', icon: FileSpreadsheet },
-        { id: 'auditoria', label: 'Bitácora de Cobros', icon: History },
+        { id: 'global', label: 'Tablero Global', shortLabel: 'Tablero', icon: PieChart },
+        { id: 'sucursales', label: 'Sucursales y Usuarios', shortLabel: 'Sucursales', icon: Building },
+        { id: 'reportes', label: 'Reportes y Auditoría', shortLabel: 'Reportes', icon: FileSpreadsheet },
+        { id: 'auditoria', label: 'Bitácora de Cobros', shortLabel: 'Bitácora', icon: History },
       ];
     case 'taller':
       return [
-        { id: 'taller', label: 'Mantenimiento Motos', icon: Wrench },
-        { id: 'flotilla', label: 'Flotilla de Cobranza', icon: Bike },
-        { id: 'auditoria', label: 'Historial de Servicios', icon: History },
+        { id: 'taller', label: 'Mantenimiento Motos', shortLabel: 'Taller', icon: Wrench },
+        { id: 'flotilla', label: 'Flotilla de Cobranza', shortLabel: 'Flotilla', icon: Bike },
+        { id: 'auditoria', label: 'Historial de Servicios', shortLabel: 'Historial', icon: History },
       ];
   }
 }
@@ -135,7 +136,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Footer Actions */}
       <div className="p-3 border-t border-slate-800 space-y-1">
         <button
-          onClick={onOpenDataModal}
+          onClick={() => {
+            onOpenDataModal();
+            onCloseMobile();
+          }}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
         >
           <Trash2 className="w-4 h-4 text-red-400" />
@@ -143,7 +147,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
 
         <button
-          onClick={onLogout}
+          onClick={() => {
+            onLogout();
+            onCloseMobile();
+          }}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-red-400 hover:text-red-300 hover:bg-red-950/40 transition cursor-pointer"
         >
           <LogOut className="w-4 h-4" />

@@ -26,6 +26,17 @@ import { GerenteView } from './views/GerenteView';
 import { AdminView } from './views/AdminView';
 import { TallerMotosView } from './views/TallerMotosView';
 
+// Helper to get default module for each role
+const getDefaultModule = (role: UserRole | null): string => {
+  switch (role) {
+    case 'cobrador': return 'cobranza';
+    case 'gerente': return 'simulador';
+    case 'admin': return 'global';
+    case 'taller': return 'taller';
+    default: return 'cobranza';
+  }
+};
+
 export default function App() {
   // Navigation & Role State
   const [activeRole, setActiveRole] = useState<UserRole | null>(() => {
@@ -33,7 +44,17 @@ export default function App() {
     return (saved as UserRole) || null;
   });
 
-  const [activeModule, setActiveModule] = useState<string>('cobranza');
+  const [activeModule, setActiveModule] = useState<string>(() => {
+    const savedRole = localStorage.getItem('garma_active_role') as UserRole | null;
+    const savedModule = localStorage.getItem('garma_active_module');
+    // Ensure savedModule is valid for activeRole
+    if (savedRole === 'cobrador' && ['cobranza', 'clientes', 'saldos'].includes(savedModule || '')) return savedModule!;
+    if (savedRole === 'gerente' && ['simulador', 'arqueo', 'cartera', 'clientes'].includes(savedModule || '')) return savedModule!;
+    if (savedRole === 'admin' && ['global', 'sucursales', 'reportes', 'auditoria'].includes(savedModule || '')) return savedModule!;
+    if (savedRole === 'taller' && ['taller', 'flotilla', 'auditoria'].includes(savedModule || '')) return savedModule!;
+    return getDefaultModule(savedRole);
+  });
+
   const [activeBranchId, setActiveBranchId] = useState<string>('suc-centro');
   const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
 
@@ -78,25 +99,20 @@ export default function App() {
   const handleSelectRole = (role: UserRole) => {
     setActiveRole(role);
     localStorage.setItem('garma_active_role', role);
-    switch (role) {
-      case 'cobrador':
-        setActiveModule('cobranza');
-        break;
-      case 'gerente':
-        setActiveModule('simulador');
-        break;
-      case 'admin':
-        setActiveModule('global');
-        break;
-      case 'taller':
-        setActiveModule('taller');
-        break;
-    }
+    const defMod = getDefaultModule(role);
+    setActiveModule(defMod);
+    localStorage.setItem('garma_active_module', defMod);
+  };
+
+  const handleModuleSelect = (moduleId: string) => {
+    setActiveModule(moduleId);
+    localStorage.setItem('garma_active_module', moduleId);
   };
 
   const handleLogout = () => {
     setActiveRole(null);
     localStorage.removeItem('garma_active_role');
+    localStorage.removeItem('garma_active_module');
   };
 
   // Data mutation callbacks
@@ -164,7 +180,7 @@ export default function App() {
         <Sidebar
           activeRole={activeRole}
           activeModule={activeModule}
-          onSelectModule={setActiveModule}
+          onSelectModule={handleModuleSelect}
           isOpenMobile={isSidebarOpenMobile}
           onCloseMobile={() => setIsSidebarOpenMobile(false)}
           onLogout={handleLogout}
@@ -172,7 +188,7 @@ export default function App() {
         />
 
         {/* Dynamic Main Workspace Content */}
-        <main className="flex-1 p-3 sm:p-6 lg:p-8 min-w-0">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 pb-24 lg:pb-8 min-w-0 overflow-x-hidden">
           {activeRole === 'cobrador' && (
             <CobradorView
               activeModule={activeModule}
@@ -235,7 +251,7 @@ export default function App() {
       <BottomNav
         activeRole={activeRole}
         activeModule={activeModule}
-        onSelectModule={setActiveModule}
+        onSelectModule={handleModuleSelect}
       />
 
       {/* MODAL: Printable Receipt */}

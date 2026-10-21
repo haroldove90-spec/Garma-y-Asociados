@@ -57,6 +57,9 @@ export const AdminView: React.FC<AdminViewProps> = ({
   onBranchAdded,
   onUserAdded
 }) => {
+  // Safe active module fallback
+  const currentModule = ['global', 'sucursales', 'reportes', 'auditoria'].includes(activeModule) ? activeModule : 'global';
+
   // Filter according to selected branch or global
   const filteredContracts = useMemo(() => {
     return contracts.filter(c => activeBranchId === 'todas' || c.sucursalId === activeBranchId);
@@ -330,7 +333,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
       </div>
 
       {/* MODULE: TABLERO GLOBAL (Recaudación por Sucursal & Cartera) */}
-      {activeModule === 'global' && (
+      {currentModule === 'global' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Branch breakdown cards */}
           <div className="lg:col-span-7 space-y-4">
@@ -438,7 +441,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
       )}
 
       {/* MODULE: SUCURSALES Y USUARIOS */}
-      {activeModule === 'sucursales' && (
+      {currentModule === 'sucursales' && (
         <div className="space-y-6">
           {/* Header with Buttons */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -512,7 +515,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
       )}
 
       {/* MODULE: REPORTES Y EXPORTACIÓN */}
-      {activeModule === 'reportes' && (
+      {currentModule === 'reportes' && (
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-6">
           <div className="border-b pb-3">
             <h3 className="text-base font-bold text-slate-900">
@@ -600,7 +603,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
       )}
 
       {/* MODULE: BITÁCORA Y AUDITORÍA DE COBROS */}
-      {activeModule === 'auditoria' && (
+      {currentModule === 'auditoria' && (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
           <div className="p-4 border-b flex items-center justify-between">
             <div>

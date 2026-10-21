@@ -70,28 +70,28 @@ export const Header: React.FC<HeaderProps> = ({
   const roleInfo = getRoleBadge();
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-xs">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-15 sm:h-20 flex items-center justify-between gap-1.5 sm:gap-4">
         {/* Left: Mobile Sidebar Menu Toggle + Unencapsulated Full System Logo */}
-        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {onToggleSidebar && (
             <button
               onClick={onToggleSidebar}
-              className="p-2 -ml-1 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg lg:hidden"
+              className="p-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg lg:hidden cursor-pointer"
               aria-label="Abrir Menú"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           )}
 
           {/* Logotipo del Sistema (Sin encapsular, completo y sin recortes) */}
           <div className="flex items-center">
-            <GarmaLogo className="h-9 sm:h-12 w-auto max-w-[170px] sm:max-w-[260px] object-contain" />
+            <GarmaLogo className="h-8 sm:h-12 w-auto max-w-[130px] xs:max-w-[170px] sm:max-w-[260px] object-contain" />
           </div>
         </div>
 
         {/* Center / Right Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Active Branch Selector (when role allows multi-branch or branch context) */}
           {activeRole === 'admin' ? (
             <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700">
@@ -101,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onChange={(e) => onBranchChange(e.target.value)}
                 className="bg-transparent text-slate-900 font-semibold focus:outline-none cursor-pointer"
               >
-                <option value="todas">🏢 Todas las Sucursales (Consolidado)</option>
+                <option value="todas">🏢 Todas las Sucursales</option>
                 {branches.map((b) => (
                   <option key={b.id} value={b.id}>
                     {b.nombre}
@@ -119,16 +119,16 @@ export const Header: React.FC<HeaderProps> = ({
           )}
 
           {/* Active Role Indicator */}
-          <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-semibold ${roleInfo.color} shrink-0`}>
+          <div className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full border text-xs font-semibold ${roleInfo.color} shrink-0`}>
             {roleInfo.icon}
-            <span className="hidden xs:inline">{roleInfo.title}</span>
+            <span className="hidden xs:inline text-[11px] sm:text-xs">{roleInfo.title.split(' ')[0]}</span>
           </div>
 
-          {/* Database / Sample Data Manager Button */}
+          {/* Database / Sample Data Manager Button (Visible on sm+ screens; on mobile available in sidebar) */}
           <button
             onClick={onOpenDataModal}
             title={isDemoSuppressed ? "Base de datos limpia (Modo Real)" : "Gestionar datos de muestra y Supabase"}
-            className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg border text-xs font-medium transition cursor-pointer text-slate-700 bg-slate-50 hover:bg-slate-100 border-slate-300"
+            className="hidden sm:flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg border text-xs font-medium transition cursor-pointer text-slate-700 bg-slate-50 hover:bg-slate-100 border-slate-300"
           >
             <Trash2 className="w-3.5 h-3.5 text-[#C42326]" />
             <span className="hidden lg:inline">
@@ -139,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* PWA Quick Install Button */}
           <button
             onClick={onOpenInstallModal}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#000000] text-white hover:bg-zinc-800 text-xs font-semibold shadow-xs transition active:scale-95 cursor-pointer"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-[#000000] text-white hover:bg-zinc-800 text-xs font-semibold shadow-xs transition active:scale-95 cursor-pointer shrink-0"
             title="Instalar Garma y Asociados en su dispositivo"
           >
             <Download className="w-3.5 h-3.5 text-[#F07D08]" />
@@ -149,7 +149,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Logout / Switch Role Button */}
           <button
             onClick={onLogout}
-            className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg border border-red-200 bg-red-50 text-[#C42326] hover:bg-red-100 text-xs font-semibold transition active:scale-95 cursor-pointer"
+            className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg border border-red-200 bg-red-50 text-[#C42326] hover:bg-red-100 text-xs font-semibold transition active:scale-95 cursor-pointer shrink-0"
             title="Cerrar sesión y volver al inicio"
           >
             <LogOut className="w-3.5 h-3.5" />
