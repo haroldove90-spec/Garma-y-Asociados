@@ -84,10 +84,14 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
 
-          {/* Logotipo del Sistema (Sin encapsular, completo y sin recortes) */}
-          <div className="flex items-center">
-            <GarmaLogo className="h-8 sm:h-12 w-auto max-w-[130px] xs:max-w-[170px] sm:max-w-[260px] object-contain" />
-          </div>
+          {/* Logotipo del Sistema (Sin encapsular, completo y sin recortes; clic para volver al inicio) */}
+          <button
+            onClick={onLogout}
+            title="Volver al Inicio / Selector de Roles"
+            className="flex items-center cursor-pointer hover:opacity-85 transition-opacity focus:outline-none"
+          >
+            <GarmaLogo className="h-8 sm:h-12 w-auto max-w-[150px] sm:max-w-[260px] object-contain" />
+          </button>
         </div>
 
         {/* Center / Right Controls */}
@@ -121,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Active Role Indicator */}
           <div className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 rounded-full border text-xs font-semibold ${roleInfo.color} shrink-0`}>
             {roleInfo.icon}
-            <span className="hidden xs:inline text-[11px] sm:text-xs">{roleInfo.title.split(' ')[0]}</span>
+            <span className="hidden sm:inline text-xs">{roleInfo.title.split(' ')[0]}</span>
           </div>
 
           {/* Database / Sample Data Manager Button (Visible on sm+ screens; on mobile available in sidebar) */}

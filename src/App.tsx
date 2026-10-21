@@ -38,22 +38,19 @@ const getDefaultModule = (role: UserRole | null): string => {
 };
 
 export default function App() {
-  // Navigation & Role State
+  // Navigation & Role State (starts on Home Screen to show unencapsulated logo and role selector)
   const [activeRole, setActiveRole] = useState<UserRole | null>(() => {
-    const saved = localStorage.getItem('garma_active_role');
-    return (saved as UserRole) || null;
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const roleParam = urlParams.get('role') as UserRole | null;
+      if (roleParam && ['cobrador', 'gerente', 'admin', 'taller'].includes(roleParam)) {
+        return roleParam;
+      }
+    }
+    return null;
   });
 
-  const [activeModule, setActiveModule] = useState<string>(() => {
-    const savedRole = localStorage.getItem('garma_active_role') as UserRole | null;
-    const savedModule = localStorage.getItem('garma_active_module');
-    // Ensure savedModule is valid for activeRole
-    if (savedRole === 'cobrador' && ['cobranza', 'clientes', 'saldos'].includes(savedModule || '')) return savedModule!;
-    if (savedRole === 'gerente' && ['simulador', 'arqueo', 'cartera', 'clientes'].includes(savedModule || '')) return savedModule!;
-    if (savedRole === 'admin' && ['global', 'sucursales', 'reportes', 'auditoria'].includes(savedModule || '')) return savedModule!;
-    if (savedRole === 'taller' && ['taller', 'flotilla', 'auditoria'].includes(savedModule || '')) return savedModule!;
-    return getDefaultModule(savedRole);
-  });
+  const [activeModule, setActiveModule] = useState<string>('cobranza');
 
   const [activeBranchId, setActiveBranchId] = useState<string>('suc-centro');
   const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
