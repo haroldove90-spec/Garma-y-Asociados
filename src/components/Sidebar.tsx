@@ -11,7 +11,7 @@ import {
   FileSpreadsheet, 
   History, 
   Wrench, 
-  Bike, 
+  Construction, 
   ShieldAlert, 
   X,
   LogOut,
@@ -60,9 +60,9 @@ export function getRoleNavItems(role: UserRole): NavItem[] {
       ];
     case 'taller':
       return [
-        { id: 'taller', label: 'Mantenimiento Motos', shortLabel: 'Taller', icon: Wrench },
-        { id: 'flotilla', label: 'Flotilla de Cobranza', shortLabel: 'Flotilla', icon: Bike },
-        { id: 'auditoria', label: 'Historial de Servicios', shortLabel: 'Historial', icon: History },
+        { id: 'taller', label: 'Mantenimiento Maquinaria', shortLabel: 'Mantenimiento', icon: Wrench },
+        { id: 'flotilla', label: 'Parque de Maquinaria Pesada', shortLabel: 'Maquinaria', icon: Construction },
+        { id: 'auditoria', label: 'Bitácora y Servicio Técnico', shortLabel: 'Bitácora', icon: History },
       ];
   }
 }
@@ -90,7 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {activeRole === 'cobrador' && 'Asesoría y Cobranza'}
             {activeRole === 'gerente' && 'Gerencia de Sucursal'}
             {activeRole === 'admin' && 'Dirección General'}
-            {activeRole === 'taller' && 'Taller y Mantenimiento'}
+            {activeRole === 'taller' && 'Taller y Maquinaria Pesada'}
           </h2>
         </div>
         <button

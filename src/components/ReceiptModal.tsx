@@ -83,7 +83,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
               Garma y Asociados S.A. de C.V.
             </p>
             <p className="text-[11px] text-slate-500">
-              Sistema de Microcréditos y Cobranza en Campo
+              Sistema de Renta de Maquinaria Pesada y Cobranza en Obra
             </p>
             <div className="mt-2 inline-block px-3 py-1 bg-red-50 text-[#C42326] border border-red-200 rounded-md text-xs font-mono font-bold">
               FOLIO: {transaction.folio}

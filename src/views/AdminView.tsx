@@ -494,7 +494,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
                         {u.rol === 'admin' && '👑 Administrador General'}
                         {u.rol === 'gerente' && '👔 Gerente de Sucursal'}
                         {u.rol === 'cobrador' && '🛵 Cobrador / Asesor'}
-                        {u.rol === 'taller' && '🔧 Taller de Motos'}
+                        {u.rol === 'taller' && '🚜 Taller y Maquinaria Pesada'}
                       </td>
                       <td className="py-3 px-4 text-slate-600">
                         {branches.find(b => b.id === u.sucursalId)?.nombre || u.sucursalId}
@@ -765,7 +765,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
                   <option value="cobrador">Cobrador / Asesor de Sucursal</option>
                   <option value="gerente">Gerente de Sucursal</option>
                   <option value="admin">Administrador General</option>
-                  <option value="taller">Taller de Motos</option>
+                  <option value="taller">Taller y Maquinaria Pesada</option>
                 </select>
               </div>
               <div>

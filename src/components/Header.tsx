@@ -9,6 +9,7 @@ import {
   ShieldCheck, 
   UserCheck, 
   Wrench, 
+  Construction,
   CheckCircle2, 
   Menu
 } from 'lucide-react';
@@ -60,9 +61,9 @@ export const Header: React.FC<HeaderProps> = ({
         };
       case 'taller':
         return {
-          title: 'Taller de Motos',
+          title: 'Maquinaria Pesada',
           color: 'bg-zinc-800 text-amber-300 border-zinc-700',
-          icon: <Wrench className="w-3.5 h-3.5 text-amber-400" />
+          icon: <Construction className="w-3.5 h-3.5 text-amber-400" />
         };
     }
   };

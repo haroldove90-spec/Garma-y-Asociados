@@ -915,10 +915,10 @@ export const CobradorView: React.FC<CobradorViewProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-slate-700 font-bold mb-1">Giro de Negocio / Actividad *</label>
+                    <label className="block text-slate-700 font-bold mb-1">Giro de Obra / Actividad Comercial *</label>
                     <input
                       type="text"
-                      placeholder="Ej: Taller mecánico, Abarrotes, etc."
+                      placeholder="Ej: Terracerías, Cimentaciones, Obra Vial, Minería..."
                       value={newGiro}
                       onChange={(e) => setNewGiro(e.target.value)}
                       className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#C42326] focus:outline-none"

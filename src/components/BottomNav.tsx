@@ -37,7 +37,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
                   <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-[#F07D08]" />
                 )}
               </div>
-              <span className={`text-[10px] xs:text-[11px] mt-0.5 tracking-tight truncate max-w-full font-medium ${isActive ? 'font-bold text-[#C42326]' : 'text-slate-600'}`}>
+              <span className={`text-[10px] sm:text-[11px] mt-0.5 tracking-tight truncate max-w-full font-medium ${isActive ? 'font-bold text-[#C42326]' : 'text-slate-600'}`}>
                 {item.shortLabel}
               </span>
               {isActive && (

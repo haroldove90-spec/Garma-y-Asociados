@@ -24,74 +24,70 @@ export const GarmaIcon: React.FC<{ className?: string }> = ({ className = 'w-8 h
   );
 };
 
-// Custom Designed Motorcycle Workshop Logo (Garma Taller de Motos)
-export const MotoWorkshopLogo: React.FC<{ className?: string }> = ({ className = 'w-24 h-24' }) => {
+// Custom Designed Heavy Machinery Logo (Garma Renta y Mantenimiento de Maquinaria Pesada)
+export const HeavyMachineryLogo: React.FC<{ className?: string }> = ({ className = 'w-24 h-24' }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
       <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-md">
-        {/* Outer Hexagonal Shield */}
+        {/* Outer Heavy Duty Shield */}
         <path
-          d="M80 8L144 44V116L80 152L16 116V44L80 8Z"
-          fill="#111827"
+          d="M80 8L146 44V116L80 152L14 116V44L80 8Z"
+          fill="#0F172A"
           stroke="#C42326"
           strokeWidth="4"
         />
         {/* Inner Orange Accent Rim */}
         <path
-          d="M80 18L134 49V111L80 142L26 111V49L80 18Z"
+          d="M80 18L136 49V111L80 142L24 111V49L80 18Z"
           stroke="#F07D08"
           strokeWidth="2"
           strokeDasharray="4 4"
         />
 
-        {/* Crossed Wrenches & Gear behind moto */}
-        <g opacity="0.4" stroke="#F07D08" strokeWidth="3" strokeLinecap="round">
-          <line x1="42" y1="42" x2="118" y2="118" />
-          <line x1="118" y1="42" x2="42" y2="118" />
-        </g>
-        <circle cx="80" cy="80" r="30" stroke="#C42326" strokeWidth="3" opacity="0.3" strokeDasharray="6 6" />
+        {/* Industrial Gear Outline in background */}
+        <circle cx="80" cy="72" r="34" stroke="#F07D08" strokeWidth="2.5" opacity="0.3" strokeDasharray="6 4" />
+        <circle cx="80" cy="72" r="22" stroke="#C42326" strokeWidth="2" opacity="0.3" />
 
-        {/* Dynamic Sport Motorcycle Silhouette */}
-        {/* Rear Wheel */}
-        <circle cx="46" cy="98" r="18" stroke="#F07D08" strokeWidth="5" fill="#1F2937" />
-        <circle cx="46" cy="98" r="8" fill="#C42326" />
-        
-        {/* Front Wheel */}
-        <circle cx="114" cy="98" r="18" stroke="#F07D08" strokeWidth="5" fill="#1F2937" />
-        <circle cx="114" cy="98" r="8" fill="#C42326" />
+        {/* Heavy Excavator Machine Body (Cabina y Contrapeso) */}
+        {/* Counterweight & Engine Hood */}
+        <rect x="36" y="66" width="30" height="20" rx="3" fill="#C42326" />
+        {/* Operator Cabin */}
+        <path d="M54 54H68L72 66H50L54 54Z" fill="#F07D08" />
+        <rect x="55" y="56" width="10" height="8" rx="1" fill="#E2E8F0" opacity="0.85" />
 
-        {/* Chassis & Body Frame */}
+        {/* Hydraulic Boom & Arm (Brazo y Pluma Hidráulica de Excavadora) */}
+        {/* Main Boom */}
+        <path d="M68 66L88 44L104 56" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Hydraulic Cylinder */}
+        <line x1="72" y1="68" x2="86" y2="48" stroke="#F07D08" strokeWidth="2.5" />
+        {/* Dipper / Arm */}
+        <path d="M104 56L122 76" stroke="#FFFFFF" strokeWidth="4.5" strokeLinecap="round" />
+        {/* Heavy Excavator Bucket with Teeth (Cucharón con dientes) */}
         <path
-          d="M46 98L62 72H82L98 64H110L114 98M82 72L96 98M46 98L74 98"
+          d="M122 76L130 82L124 92L114 88L118 78L122 76Z"
+          fill="#F07D08"
           stroke="#FFFFFF"
-          strokeWidth="4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
+        {/* Bucket Teeth */}
+        <line x1="124" y1="92" x2="128" y2="95" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+        <line x1="120" y1="91" x2="124" y2="94" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+        <line x1="116" y1="89" x2="119" y2="93" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
 
-        {/* Tank & Cowling in Garma Red */}
-        <path
-          d="M66 68L84 64C90 64 96 66 102 60L108 56L102 52L86 54L68 62L66 68Z"
-          fill="#C42326"
-        />
+        {/* Heavy Duty Caterpillar Track Undercarriage (Orugas de Acero) */}
+        <rect x="28" y="86" width="70" height="18" rx="9" fill="#1E293B" stroke="#F07D08" strokeWidth="3" />
+        {/* Track Wheels / Rollers */}
+        <circle cx="37" cy="95" r="5" fill="#C42326" />
+        <circle cx="49" cy="95" r="4.5" fill="#94A3B8" />
+        <circle cx="61" cy="95" r="4.5" fill="#94A3B8" />
+        <circle cx="73" cy="95" r="4.5" fill="#94A3B8" />
+        <circle cx="85" cy="95" r="5" fill="#C42326" />
+        
+        {/* Track Segment Lines */}
+        <line x1="30" y1="90" x2="30" y2="100" stroke="#FFFFFF" strokeWidth="1.5" opacity="0.6" />
+        <line x1="94" y1="90" x2="94" y2="100" stroke="#FFFFFF" strokeWidth="1.5" opacity="0.6" />
 
-        {/* Handlebars & Fork */}
-        <path
-          d="M102 54L114 98M98 50L106 52"
-          stroke="#F07D08"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-        />
-
-        {/* Exhaust Pipe */}
-        <path
-          d="M60 92L78 92L92 84"
-          stroke="#E5E7EB"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-
-        {/* Workshop Star Badge & Typography */}
+        {/* Quality Banner & Typography */}
         <path
           d="M80 114L83 121H90L84 125L86 132L80 128L74 132L76 125L70 121H77L80 114Z"
           fill="#F07D08"
@@ -101,16 +97,19 @@ export const MotoWorkshopLogo: React.FC<{ className?: string }> = ({ className =
           y="140"
           textAnchor="middle"
           fill="#FFFFFF"
-          fontSize="9"
+          fontSize="8.5"
           fontWeight="bold"
-          letterSpacing="1.5"
+          letterSpacing="1.2"
         >
-          GARMA MOTO
+          MAQUINARIA PESADA
         </text>
       </svg>
     </div>
   );
 };
+
+// Backward-compatible alias
+export const MotoWorkshopLogo = HeavyMachineryLogo;
 
 // Cobrador Role Logo
 export const CobradorLogo: React.FC<{ className?: string }> = ({ className = 'w-24 h-24' }) => {

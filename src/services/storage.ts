@@ -6,6 +6,7 @@ import {
   Branch, 
   UserAccount, 
   AuditLog, 
+  MachineryOrder,
   MotorcycleOrder 
 } from '../types';
 
@@ -104,8 +105,8 @@ export const INITIAL_USERS: UserAccount[] = [
   },
   {
     id: 'usr-6',
-    nombre: 'Taller Central de Motos - Mtro. Javier Peña',
-    email: 'taller@garmayasociados.com',
+    nombre: 'Taller Central de Maquinaria - Ing. Javier Peña',
+    email: 'taller.maquinaria@garmayasociados.com',
     rol: 'taller',
     sucursalId: 'suc-centro',
     telefono: '55-4455-6677',
@@ -113,108 +114,108 @@ export const INITIAL_USERS: UserAccount[] = [
   }
 ];
 
-// Sample Clients with Aval
+// Sample Clients with Aval (Contratistas, Constructoras y Desarrolladores de Obra)
 export const INITIAL_CLIENTS: Client[] = [
   {
     id: 'cli-001',
-    nombreCompleto: 'María Elena Sánchez Torres',
+    nombreCompleto: 'Constructora e Infraestructura del Valle (Ing. María Elena Sánchez)',
     telefono: '55-4123-9876',
-    direccion: 'Calle Morelos #102, Col. San Juan',
-    giroNegocio: 'Abarrotes y Cremería "La Guadalupana"',
+    direccion: 'Parque Industrial Poniente Lote 14, Obra Libramiento Sur',
+    giroNegocio: 'Cimentaciones Profundas y Terracerías',
     diaAsignadoPago: 'Miércoles',
     sucursalId: 'suc-centro',
     fechaRegistro: '2026-09-01',
     aval: {
       id: 'ava-001',
-      nombreCompleto: 'José Luis Sánchez Torres',
+      nombreCompleto: 'Ing. José Luis Sánchez Torres',
       telefono: '55-7890-1234',
-      direccion: 'Calle Morelos #104, Col. San Juan',
-      parentesco: 'Hermano'
+      direccion: 'Av. Las Palmas #204, Col. Del Valle',
+      parentesco: 'Socio Comercial / Garante Solidario'
     }
   },
   {
     id: 'cli-002',
-    nombreCompleto: 'Carlos Eduardo Ramírez Nava',
+    nombreCompleto: 'Terracerías y Pavimentos del Centro (Ing. Carlos Eduardo Ramírez)',
     telefono: '55-6234-8765',
-    direccion: 'Av. Hidalgo #45, Col. Centro',
-    giroNegocio: 'Taller de Hojalatería y Pintura',
+    direccion: 'Carretera Federal Km 8.5, Frente de Obra Palmas 3',
+    giroNegocio: 'Movimiento de Tierras y Pavimentación Asfáltica',
     diaAsignadoPago: 'Miércoles',
     sucursalId: 'suc-centro',
     fechaRegistro: '2026-09-10',
     aval: {
       id: 'ava-002',
-      nombreCompleto: 'Guadalupe Nava Ramos',
+      nombreCompleto: 'Arq. Guadalupe Nava Ramos',
       telefono: '55-8901-2345',
-      direccion: 'Av. Hidalgo #47, Col. Centro',
-      parentesco: 'Madre'
+      direccion: 'Av. Industria #47, Col. Centro',
+      parentesco: 'Directora de Operaciones / Aval'
     }
   },
   {
     id: 'cli-003',
-    nombreCompleto: 'Beatriz Adriana Mendoza Ruiz',
+    nombreCompleto: 'Edificaciones Civiles y Mineras del Altiplano (Lucía Méndez Cruz)',
     telefono: '55-7345-7654',
-    direccion: 'Privada Rosas #12, Col. Álamos',
-    giroNegocio: 'Estética y Barbería "Glamour"',
+    direccion: 'Camino a Mina San Jerónimo Km 3, Frente de Trituración',
+    giroNegocio: 'Extracción de Agregados y Obra Civil Pesada',
     diaAsignadoPago: 'Miércoles',
     sucursalId: 'suc-centro',
     fechaRegistro: '2026-08-15',
     aval: {
       id: 'ava-003',
-      nombreCompleto: 'Miguel Mendoza Ruiz',
+      nombreCompleto: 'Lic. Miguel Mendoza Ruiz',
       telefono: '55-9012-3456',
       direccion: 'Privada Rosas #14, Col. Álamos',
-      parentesco: 'Hermano'
+      parentesco: 'Representante Legal / Aval'
     }
   },
   {
     id: 'cli-004',
-    nombreCompleto: 'Rodrigo Alberto Herrera Gómez',
+    nombreCompleto: 'Desarrollos Urbanos y Drenajes del Río (Rodrigo Alberto Herrera)',
     telefono: '55-8456-6543',
-    direccion: 'Calle 5 de Mayo #88, Col. Santa Cruz',
-    giroNegocio: 'Taquería "Los Tres Reyes"',
+    direccion: 'Prolongación 5 de Mayo #88, Obra Colector Poniente',
+    giroNegocio: 'Zanjado, Canalización y Drenaje Pluvial Profundo',
     diaAsignadoPago: 'Jueves',
     sucursalId: 'suc-centro',
     fechaRegistro: '2026-09-20',
     aval: {
       id: 'ava-004',
-      nombreCompleto: 'Patricia Gómez Lara',
+      nombreCompleto: 'Ing. Patricia Gómez Lara',
       telefono: '55-1122-3344',
       direccion: 'Calle 5 de Mayo #90, Col. Santa Cruz',
-      parentesco: 'Esposa'
+      parentesco: 'Socia Administradora'
     }
   },
   {
     id: 'cli-005',
-    nombreCompleto: 'Esperanza Morales Castro',
+    nombreCompleto: 'Urbanizadora y Terracerías del Norte (Esperanza Morales Castro)',
     telefono: '55-9567-5432',
-    direccion: 'Av. Insurgentes Norte #210, Tlalnepantla',
-    giroNegocio: 'Venta de Ropa y Calzado por Catálogo',
+    direccion: 'Av. Insurgentes Norte #210, Obra Parque Industrial Tlalnepantla',
+    giroNegocio: 'Plataformas Industriales y Vialidades',
     diaAsignadoPago: 'Miércoles',
     sucursalId: 'suc-norte',
     fechaRegistro: '2026-08-05',
     aval: {
       id: 'ava-005',
-      nombreCompleto: 'Daniel Morales Castro',
+      nombreCompleto: 'Ing. Daniel Morales Castro',
       telefono: '55-2233-4455',
       direccion: 'Av. Insurgentes Norte #212, Tlalnepantla',
-      parentesco: 'Hijo'
+      parentesco: 'Gerente Técnico / Aval'
     }
   },
   {
     id: 'cli-006',
-    nombreCompleto: 'Fernando Ortiz Valenzuela',
+    nombreCompleto: 'Demoliciones y Estructuras Metropolitanas (Fernando Ortiz)',
     telefono: '55-3344-9988',
-    direccion: 'Calle Reforma #401, Col. San Andrés',
-    giroNegocio: 'Distribuidora de Frutas y Verduras',
+    direccion: 'Av. Reforma #401, Obra Puente Vehicular Oriente',
+    giroNegocio: 'Demolición Pesada con Martillo Hidráulico',
     diaAsignadoPago: 'Viernes',
     sucursalId: 'suc-oriente',
     fechaRegistro: '2026-09-12',
     aval: {
       id: 'ava-006',
-      nombreCompleto: 'Teresa Valenzuela Solís',
+      nombreCompleto: 'Ing. Teresa Valenzuela Solís',
       telefono: '55-4455-8899',
       direccion: 'Calle Reforma #403, Col. San Andrés',
-      parentesco: 'Tía'
+      parentesco: 'Contratista Asociada'
     }
   }
 ];
@@ -250,132 +251,162 @@ function generateSampleAmortization(monto: number, semanas: number, cuota: numbe
   return rows;
 }
 
-// Sample Loan Contracts
+// Sample Loan Contracts (Contratos de Renta de Maquinaria Pesada)
 export const INITIAL_CONTRACTS: LoanContract[] = [
   {
     id: 'con-1001',
     folio: 'GAR-2026-081',
     clienteId: 'cli-001',
     sucursalId: 'suc-centro',
-    montoSolicitado: 12000,
+    montoSolicitado: 36000,
     plazoSemanas: 16,
     frecuencia: 'semanal',
     diaPago: 'Miércoles',
     tasaInteresPorcentaje: 12,
-    interesTotal: 1440,
-    ivaTotal: 230.4,
-    seguroVidaTotal: 800,
-    ahorroTotal: 800,
-    montoTotalAdeudo: 15270.4,
-    cuotaPeriodica: 954.4,
-    saldoPendiente: 6680.8,
+    interesTotal: 4320,
+    ivaTotal: 691.2,
+    seguroVidaTotal: 2400,
+    ahorroTotal: 2400,
+    montoTotalAdeudo: 45811.2,
+    cuotaPeriodica: 2863.2,
+    saldoPendiente: 20042.4,
     saldoVencido: 0,
     estatus: 'Activo',
     fechaAprobacion: '2026-08-20',
     fechaPrimerPago: '2026-08-27',
     aprobadoPor: 'Lic. Roberto Morales',
-    totalPagado: 8589.6,
-    tablaAmortizacion: generateSampleAmortization(12000, 16, 954.4, 750, 90, 14.4, 50, 50, 9)
+    totalPagado: 25768.8,
+    equipoRenta: 'Excavadora de Orugas CAT 320D (20 Toneladas)',
+    numeroEconomico: 'MQ-EX01',
+    horometroInicial: 1480,
+    ubicacionObra: 'Tramo Carretero Libramiento Sur Km 14',
+    depositoGarantia: 15000,
+    costoFleteTraslado: 4500,
+    tablaAmortizacion: generateSampleAmortization(36000, 16, 2863.2, 2250, 270, 43.2, 150, 150, 9)
   },
   {
     id: 'con-1002',
     folio: 'GAR-2026-092',
     clienteId: 'cli-002',
     sucursalId: 'suc-centro',
-    montoSolicitado: 25000,
+    montoSolicitado: 48000,
     plazoSemanas: 24,
     frecuencia: 'semanal',
     diaPago: 'Miércoles',
     tasaInteresPorcentaje: 15,
-    interesTotal: 3750,
-    ivaTotal: 600,
-    seguroVidaTotal: 1200,
-    ahorroTotal: 1200,
-    montoTotalAdeudo: 31750,
-    cuotaPeriodica: 1322.9,
-    saldoPendiente: 18520.6,
-    saldoVencido: 2645.8, // 2 pagos en atraso (Mora)
+    interesTotal: 7200,
+    ivaTotal: 1152,
+    seguroVidaTotal: 3600,
+    ahorroTotal: 3600,
+    montoTotalAdeudo: 63552,
+    cuotaPeriodica: 2648,
+    saldoPendiente: 37072,
+    saldoVencido: 5296, // 2 semanas de renta en atraso en frente de obra
     estatus: 'En Mora',
     fechaAprobacion: '2026-07-15',
     fechaPrimerPago: '2026-07-22',
     aprobadoPor: 'Lic. Roberto Morales',
-    totalPagado: 13229.4,
-    tablaAmortizacion: generateSampleAmortization(25000, 24, 1322.9, 1041.6, 156.25, 25, 50, 50, 8)
+    totalPagado: 26480,
+    equipoRenta: 'Retroexcavadora 4x4 John Deere 310L con Brazo Extensible',
+    numeroEconomico: 'MQ-RT04',
+    horometroInicial: 2190,
+    ubicacionObra: 'Fraccionamiento Residencial Las Palmas Frente 3',
+    depositoGarantia: 12000,
+    costoFleteTraslado: 3200,
+    tablaAmortizacion: generateSampleAmortization(48000, 24, 2648, 2000, 300, 48, 150, 150, 8)
   },
   {
     id: 'con-1003',
     folio: 'GAR-2026-098',
     clienteId: 'cli-003',
     sucursalId: 'suc-centro',
-    montoSolicitado: 8000,
+    montoSolicitado: 28000,
     plazoSemanas: 12,
     frecuencia: 'semanal',
     diaPago: 'Miércoles',
     tasaInteresPorcentaje: 10,
-    interesTotal: 800,
-    ivaTotal: 128,
-    seguroVidaTotal: 600,
-    ahorroTotal: 600,
-    montoTotalAdeudo: 10128,
-    cuotaPeriodica: 844,
-    saldoPendiente: 2532,
+    interesTotal: 2800,
+    ivaTotal: 448,
+    seguroVidaTotal: 1800,
+    ahorroTotal: 1800,
+    montoTotalAdeudo: 34848,
+    cuotaPeriodica: 2904,
+    saldoPendiente: 8712,
     saldoVencido: 0,
     estatus: 'Activo',
     fechaAprobacion: '2026-08-30',
     fechaPrimerPago: '2026-09-06',
     aprobadoPor: 'Lic. Roberto Morales',
-    totalPagado: 7596,
-    tablaAmortizacion: generateSampleAmortization(8000, 12, 844, 666.6, 66.6, 10.6, 50, 50, 9)
+    totalPagado: 26136,
+    equipoRenta: 'Rodillo Compactador Vibratorio Dynapac CA250 (12T)',
+    numeroEconomico: 'MQ-VC02',
+    horometroInicial: 890,
+    ubicacionObra: 'Plataforma Industrial Norte Nave 4',
+    depositoGarantia: 10000,
+    costoFleteTraslado: 2800,
+    tablaAmortizacion: generateSampleAmortization(28000, 12, 2904, 2333.3, 233.3, 37.3, 150, 150, 9)
   },
   {
     id: 'con-1004',
     folio: 'GAR-2026-104',
     clienteId: 'cli-004',
     sucursalId: 'suc-centro',
-    montoSolicitado: 15000,
+    montoSolicitado: 55000,
     plazoSemanas: 16,
     frecuencia: 'semanal',
     diaPago: 'Jueves',
     tasaInteresPorcentaje: 12,
-    interesTotal: 1800,
-    ivaTotal: 288,
-    seguroVidaTotal: 800,
-    ahorroTotal: 800,
-    montoTotalAdeudo: 18688,
-    cuotaPeriodica: 1168,
-    saldoPendiente: 14016,
+    interesTotal: 6600,
+    ivaTotal: 1056,
+    seguroVidaTotal: 2400,
+    ahorroTotal: 2400,
+    montoTotalAdeudo: 67456,
+    cuotaPeriodica: 4216,
+    saldoPendiente: 50592,
     saldoVencido: 0,
     estatus: 'Activo',
     fechaAprobacion: '2026-09-22',
     fechaPrimerPago: '2026-09-29',
     aprobadoPor: 'Lic. Roberto Morales',
-    totalPagado: 4672,
-    tablaAmortizacion: generateSampleAmortization(15000, 16, 1168, 937.5, 112.5, 18, 50, 50, 4)
+    totalPagado: 16864,
+    equipoRenta: 'Motoniveladora Caterpillar 120M con Ripper y Cuchilla 14ft',
+    numeroEconomico: 'MQ-MN02',
+    horometroInicial: 1650,
+    ubicacionObra: 'Obra Colector Poniente y Terracerías',
+    depositoGarantia: 18000,
+    costoFleteTraslado: 5000,
+    tablaAmortizacion: generateSampleAmortization(55000, 16, 4216, 3437.5, 412.5, 66, 150, 150, 4)
   },
   {
     id: 'con-1005',
     folio: 'GAR-2026-077',
     clienteId: 'cli-005',
     sucursalId: 'suc-norte',
-    montoSolicitado: 20000,
+    montoSolicitado: 42000,
     plazoSemanas: 20,
     frecuencia: 'semanal',
     diaPago: 'Miércoles',
     tasaInteresPorcentaje: 14,
-    interesTotal: 2800,
-    ivaTotal: 448,
-    seguroVidaTotal: 1000,
-    ahorroTotal: 1000,
-    montoTotalAdeudo: 25248,
-    cuotaPeriodica: 1262.4,
-    saldoPendiente: 8836.8,
+    interesTotal: 5880,
+    ivaTotal: 940.8,
+    seguroVidaTotal: 3000,
+    ahorroTotal: 3000,
+    montoTotalAdeudo: 54820.8,
+    cuotaPeriodica: 2741,
+    saldoPendiente: 19187,
     saldoVencido: 0,
     estatus: 'Activo',
     fechaAprobacion: '2026-08-10',
     fechaPrimerPago: '2026-08-17',
     aprobadoPor: 'Ing. Carmen Salazar',
-    totalPagado: 16411.2,
-    tablaAmortizacion: generateSampleAmortization(20000, 20, 1262.4, 1000, 140, 22.4, 50, 50, 13)
+    totalPagado: 35633.8,
+    equipoRenta: 'Cargador Frontal de Ruedas CAT 938K (Cucharón 3.0 m³)',
+    numeroEconomico: 'MQ-CF01',
+    horometroInicial: 3100,
+    ubicacionObra: 'Parque Industrial Tlalnepantla Nave A',
+    depositoGarantia: 14000,
+    costoFleteTraslado: 3800,
+    tablaAmortizacion: generateSampleAmortization(42000, 20, 2741, 2100, 294, 47, 150, 150, 13)
   }
 ];
 
@@ -481,37 +512,79 @@ export const INITIAL_AUDIT_LOGS: AuditLog[] = [
   }
 ];
 
-// Motorcycle Fleet / Workshop Orders
-export const INITIAL_MOTO_ORDERS: MotorcycleOrder[] = [
+// Heavy Machinery Orders / Parque de Maquinaria Pesada
+export const INITIAL_MACHINERY_ORDERS: MachineryOrder[] = [
   {
-    id: 'mot-001',
-    folio: 'TALL-2026-014',
-    placa: 'CDMX-98A7',
-    modelo: 'Honda Cargo 150cc (Ruta Centro)',
-    cobradorAsignado: 'Alejandro Ruiz',
+    id: 'maq-001',
+    folio: 'MAQ-2026-024',
+    numeroEconomico: 'MQ-EX01',
+    tipoEquipo: 'Excavadora de Orugas (20 Ton)',
+    modelo: 'Caterpillar 320D',
+    serie: 'CAT0320DPG9921',
+    operadorAsignado: 'Ing. María Elena Sánchez (Obra Libramiento)',
     sucursalId: 'suc-centro',
-    servicioSolicitado: 'Cambio de balatas traseras, afinación y cambio de aceite sintético',
-    fechaIngreso: '2026-10-20',
-    kilometraje: 32450,
-    costoEstimado: 680,
-    estatus: 'Reparada',
-    mecanicoResponsable: 'Mtro. Javier Peña'
+    servicioSolicitado: 'Mantenimiento preventivo 2,500 hrs: Kit de filtros de motor diesel, aceite hidráulico ISO 46 y ajuste de tensión en zapatas de oruga',
+    fechaIngreso: '2026-10-18',
+    horometro: 2450,
+    costoEstimado: 8400,
+    estatus: 'En Renta en Obra',
+    mecanicoResponsable: 'Ing. Javier Peña (Jefe de Taller)',
+    ubicacionObra: 'Tramo Carretero Libramiento Sur Km 14'
   },
   {
-    id: 'mot-002',
-    folio: 'TALL-2026-015',
-    placa: 'MEX-44K1',
-    modelo: 'Italika FT150 (Ruta Tlalnepantla)',
-    cobradorAsignado: 'Víctor Peñaloza',
-    sucursalId: 'suc-norte',
-    servicioSolicitado: 'Reemplazo de cadena de arrastre y ajuste de carburador',
+    id: 'maq-002',
+    folio: 'MAQ-2026-025',
+    numeroEconomico: 'MQ-RT04',
+    tipoEquipo: 'Retroexcavadora 4x4',
+    modelo: 'John Deere 310L con Brazo Extensible',
+    serie: 'JD310L-582910',
+    operadorAsignado: 'Terracerías y Pavimentos del Centro',
+    sucursalId: 'suc-centro',
+    servicioSolicitado: 'Mantenimiento correctivo hidráulico: Reempaque de sellos en cilindro de levante y cambio de mangueras de alta presión',
     fechaIngreso: '2026-10-21',
-    kilometraje: 41800,
-    costoEstimado: 950,
-    estatus: 'En Taller',
-    mecanicoResponsable: 'Mtro. Javier Peña'
+    horometro: 3180,
+    costoEstimado: 5200,
+    estatus: 'En Mantenimiento',
+    mecanicoResponsable: 'Ing. Javier Peña (Jefe de Taller)',
+    ubicacionObra: 'Patio Central Garma - Bahía 2'
+  },
+  {
+    id: 'maq-003',
+    folio: 'MAQ-2026-026',
+    numeroEconomico: 'MQ-MN02',
+    tipoEquipo: 'Motoniveladora Articulada',
+    modelo: 'Caterpillar 120M (Vertedera 14ft)',
+    serie: 'CAT0120M44819',
+    operadorAsignado: 'Desarrollos Urbanos y Drenajes',
+    sucursalId: 'suc-centro',
+    servicioSolicitado: 'Inspección de desgaste en gavilanes y cuchillas de corte, engrase general de tornamesa y calibración de tándems',
+    fechaIngreso: '2026-10-19',
+    horometro: 1650,
+    costoEstimado: 3800,
+    estatus: 'En Patio',
+    mecanicoResponsable: 'Téc. Marco Aurelio Vargas',
+    ubicacionObra: 'Patio Matriz Garma - Lista para renta'
+  },
+  {
+    id: 'maq-004',
+    folio: 'MAQ-2026-027',
+    numeroEconomico: 'MQ-VC02',
+    tipoEquipo: 'Rodillo Vibrocompactador (12 Ton)',
+    modelo: 'Dynapac CA250 Monocilíndrico',
+    serie: 'DYN-CA250-9901',
+    operadorAsignado: 'Edificaciones Civiles y Mineras',
+    sucursalId: 'suc-centro',
+    servicioSolicitado: 'Revisión y cambio de amortiguadores de tambor vibratorio, afinación de motor Cummins diesel',
+    fechaIngreso: '2026-10-15',
+    horometro: 890,
+    costoEstimado: 4600,
+    estatus: 'En Renta en Obra',
+    mecanicoResponsable: 'Téc. Marco Aurelio Vargas',
+    ubicacionObra: 'Plataforma Industrial Norte Nave 4'
   }
 ];
+
+export const INITIAL_MOTO_ORDERS: MotorcycleOrder[] = INITIAL_MACHINERY_ORDERS;
 
 // Storage Helper Functions
 export const storageService = {
@@ -819,13 +892,13 @@ export const storageService = {
     this.saveAuditLogs(logs);
   },
 
-  // Motorcycle Orders
-  getMotoOrders(): MotorcycleOrder[] {
+  // Heavy Machinery Orders (Parque y Mantenimiento de Maquinaria Pesada)
+  getMachineryOrders(): MachineryOrder[] {
     const data = localStorage.getItem(STORAGE_KEYS.MOTO_ORDERS);
     if (!data) {
       if (this.isDemoSuppressed()) return [];
-      this.saveMotoOrders(INITIAL_MOTO_ORDERS);
-      return INITIAL_MOTO_ORDERS;
+      this.saveMachineryOrders(INITIAL_MACHINERY_ORDERS);
+      return INITIAL_MACHINERY_ORDERS;
     }
     try {
       return JSON.parse(data);
@@ -834,14 +907,27 @@ export const storageService = {
     }
   },
 
-  saveMotoOrders(orders: MotorcycleOrder[]): void {
+  saveMachineryOrders(orders: MachineryOrder[]): void {
     localStorage.setItem(STORAGE_KEYS.MOTO_ORDERS, JSON.stringify(orders));
   },
 
-  addMotoOrder(order: MotorcycleOrder): void {
-    const orders = this.getMotoOrders();
+  addMachineryOrder(order: MachineryOrder): void {
+    const orders = this.getMachineryOrders();
     orders.unshift(order);
-    this.saveMotoOrders(orders);
+    this.saveMachineryOrders(orders);
+  },
+
+  // Backward-compatible methods
+  getMotoOrders(): MotorcycleOrder[] {
+    return this.getMachineryOrders();
+  },
+
+  saveMotoOrders(orders: MotorcycleOrder[]): void {
+    this.saveMachineryOrders(orders);
+  },
+
+  addMotoOrder(order: MotorcycleOrder): void {
+    this.addMachineryOrder(order);
   },
 
   // Supabase Configuration

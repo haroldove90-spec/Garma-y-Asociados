@@ -26,7 +26,7 @@ export const ContractModal: React.FC<ContractModalProps> = ({
           <div className="flex items-center gap-2.5">
             <FileCheck className="w-5 h-5 text-[#F07D08]" />
             <div>
-              <h3 className="text-sm font-bold">Contrato Oficial de Microcrédito y Calendario de Pagos</h3>
+              <h3 className="text-sm font-bold">Contrato Oficial de Arrendamiento de Maquinaria Pesada</h3>
               <p className="text-xs text-slate-400">Folio: {contract.folio} • {client.nombreCompleto}</p>
             </div>
           </div>
@@ -93,32 +93,71 @@ export const ContractModal: React.FC<ContractModalProps> = ({
             </div>
           </div>
 
+          {/* Equipment & Machinery Specifications */}
+          <div className="bg-amber-50/40 p-4 rounded-xl border border-amber-200">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900 mb-2">
+              3. Ficha Técnica de la Maquinaria Pesada Arrendada
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div>
+                <span className="text-slate-500 text-[10px] uppercase block">Equipo / Modelo:</span>
+                <span className="font-bold text-slate-900 text-sm">
+                  {contract.equipoRenta || 'Excavadora de Orugas CAT 320D (20T)'}
+                </span>
+              </div>
+              <div>
+                <span className="text-slate-500 text-[10px] uppercase block">No. Económico:</span>
+                <span className="font-mono font-bold text-slate-900 text-sm bg-white px-2 py-0.5 rounded border border-slate-200 inline-block">
+                  {contract.numeroEconomico || 'MQ-EX01'}
+                </span>
+              </div>
+              <div>
+                <span className="text-slate-500 text-[10px] uppercase block">Horómetro Inicial de Entrega:</span>
+                <span className="font-mono font-bold text-slate-900 text-sm">
+                  {contract.horometroInicial ? `${contract.horometroInicial.toLocaleString()} Horas` : '1,480 Horas'}
+                </span>
+              </div>
+              <div className="sm:col-span-2">
+                <span className="text-slate-500 text-[10px] uppercase block">Frente de Obra / Destino:</span>
+                <span className="font-semibold text-slate-800">
+                  {contract.ubicacionObra || 'Tramo Carretero Libramiento Sur Km 14'}
+                </span>
+              </div>
+              <div>
+                <span className="text-slate-500 text-[10px] uppercase block">Depósito en Garantía:</span>
+                <span className="font-mono font-bold text-emerald-800">
+                  ${(contract.depositoGarantia || 15000).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+            </div>
+          </div>
+
           {/* Financial Summary */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-              3. Condiciones Financieras del Otorgamiento
+              4. Condiciones Financieras de Renta y Tarifas
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white p-3 rounded-lg border border-slate-200 text-xs">
               <div className="p-2 bg-slate-50 rounded">
-                <span className="text-slate-500 text-[10px] uppercase block">Capital Autorizado</span>
+                <span className="text-slate-500 text-[10px] uppercase block">Renta Base Pactada</span>
                 <span className="font-bold text-slate-900 text-base font-mono">
                   ${contract.montoSolicitado.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="p-2 bg-slate-50 rounded">
-                <span className="text-slate-500 text-[10px] uppercase block">Plazo y Frecuencia</span>
+                <span className="text-slate-500 text-[10px] uppercase block">Periodo de Arrendamiento</span>
                 <span className="font-bold text-slate-900 text-base">
                   {contract.plazoSemanas} semanas ({contract.frecuencia})
                 </span>
               </div>
               <div className="p-2 bg-amber-50 rounded border border-amber-200">
-                <span className="text-amber-800 text-[10px] uppercase block">Cuota Periódica Fija</span>
+                <span className="text-amber-800 text-[10px] uppercase block">Renta Periódica</span>
                 <span className="font-bold text-amber-900 text-base font-mono">
                   ${contract.cuotaPeriodica.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="p-2 bg-red-50 rounded border border-red-200">
-                <span className="text-red-800 text-[10px] uppercase block">Monto Total a Pagar</span>
+                <span className="text-red-800 text-[10px] uppercase block">Total Contrato de Renta</span>
                 <span className="font-bold text-[#C42326] text-base font-mono">
                   ${contract.montoTotalAdeudo.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                 </span>
@@ -126,10 +165,10 @@ export const ContractModal: React.FC<ContractModalProps> = ({
             </div>
 
             <div className="mt-2 text-xs text-slate-600 flex flex-wrap gap-x-4 gap-y-1 bg-slate-50 px-3 py-2 rounded border border-slate-100">
-              <span><strong>Interés:</strong> ${contract.interesTotal.toFixed(2)} ({contract.tasaInteresPorcentaje}%)</span>
+              <span><strong>Cargo Financiamiento:</strong> ${contract.interesTotal.toFixed(2)} ({contract.tasaInteresPorcentaje}%)</span>
               <span><strong>IVA (16%):</strong> ${contract.ivaTotal.toFixed(2)}</span>
-              <span><strong>Seguro de Vida:</strong> ${contract.seguroVidaTotal.toFixed(2)}</span>
-              <span><strong>Aportación a Ahorro:</strong> ${contract.ahorroTotal.toFixed(2)}</span>
+              <span><strong>Seguro Maquinaria:</strong> ${contract.seguroVidaTotal.toFixed(2)}</span>
+              <span><strong>Fondo de Mantenimiento:</strong> ${contract.ahorroTotal.toFixed(2)}</span>
             </div>
           </div>
 

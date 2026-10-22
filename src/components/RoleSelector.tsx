@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserRole } from '../types';
-import { GarmaLogo, CobradorLogo, GerenteLogo, AdminLogo, MotoWorkshopLogo } from './Logos';
+import { GarmaLogo, CobradorLogo, GerenteLogo, AdminLogo, HeavyMachineryLogo } from './Logos';
 
 interface RoleSelectorProps {
   onSelectRole: (role: UserRole) => void;
@@ -25,8 +25,8 @@ export const RoleSelector: React.FC<RoleSelectorProps> = ({ onSelectRole }) => {
     },
     {
       id: 'taller',
-      name: 'Taller de Motos y Flotilla',
-      logo: <MotoWorkshopLogo className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24" />
+      name: 'Taller y Maquinaria Pesada',
+      logo: <HeavyMachineryLogo className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24" />
     }
   ];
 

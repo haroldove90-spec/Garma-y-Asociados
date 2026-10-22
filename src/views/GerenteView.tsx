@@ -71,14 +71,18 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
     return clients.filter(c => activeBranchId === 'todas' || c.sucursalId === activeBranchId);
   }, [clients, activeBranchId]);
 
-  // SIMULATOR STATE
+  // SIMULATOR STATE - RENTA DE MAQUINARIA PESADA
   const [selectedClientId, setSelectedClientId] = useState<string>(branchClients[0]?.id || '');
-  const [montoSolicitado, setMontoSolicitado] = useState<number>(10000);
+  const [montoSolicitado, setMontoSolicitado] = useState<number>(35000);
+  const [equipoRenta, setEquipoRenta] = useState<string>('Excavadora de Orugas CAT 320D (20 Ton)');
+  const [numEconomico, setNumEconomico] = useState<string>('MQ-EX01');
+  const [ubicacionObra, setUbicacionObra] = useState<string>('Tramo Carretero Libramiento Sur Km 14');
+  const [depositoGarantia, setDepositoGarantia] = useState<number>(15000);
   const [plazoSemanas, setPlazoSemanas] = useState<number>(16);
   const [frecuencia, setFrecuencia] = useState<PaymentFrequency>('semanal');
   const [tasaInteres, setTasaInteres] = useState<number>(12); // 12%
-  const [cuotaSeguroSemanal, setCuotaSeguroSemanal] = useState<number>(50);
-  const [cuotaAhorroSemanal, setCuotaAhorroSemanal] = useState<number>(50);
+  const [cuotaSeguroSemanal, setCuotaSeguroSemanal] = useState<number>(150);
+  const [cuotaAhorroSemanal, setCuotaAhorroSemanal] = useState<number>(150);
   const [diaCobro, setDiaCobro] = useState<PaymentDay>('Miércoles');
 
   // Simulation calculations
@@ -170,13 +174,19 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
       fechaPrimerPago: simCalculations.table[0]?.fechaVencimiento || '',
       aprobadoPor: currentBranch.gerenteEncargado,
       totalPagado: 0,
-      tablaAmortizacion: simCalculations.table
+      tablaAmortizacion: simCalculations.table,
+      equipoRenta,
+      numeroEconomico: numEconomico,
+      horometroInicial: 1480,
+      ubicacionObra,
+      depositoGarantia,
+      costoFleteTraslado: 4500
     };
 
     onContractApproved(newContract);
     // Immediately open printable contract for signing
     onViewContract(newContract, client);
-    alert(`¡Crédito ${newContract.folio} aprobado exitosamente! Se genera contrato para firma.`);
+    alert(`¡Contrato de Renta ${newContract.folio} aprobado exitosamente! Se genera documento oficial para firma.`);
   };
 
   // CASH CUT & ARQUEO STATE
@@ -308,17 +318,17 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
           <div className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
             <div className="border-b pb-3">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#F07D08]">
-                Fase 2: Simulación y Otorgamiento
+                Fase 2: Simulación y Arrendamiento
               </span>
               <h3 className="text-base font-bold text-slate-900 mt-0.5">
-                Parámetros Financieros del Crédito
+                Parámetros de Renta de Maquinaria Pesada
               </h3>
             </div>
 
-            {/* Select Client */}
+            {/* Select Client / Contractor */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">
-                Cliente Acreditado (Titular):
+                Contratista / Empresa Arrendataria:
               </label>
               <select
                 value={selectedClientId}
@@ -331,6 +341,66 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Equipment Selection */}
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Equipo a Rentar:</label>
+                <select
+                  value={equipoRenta}
+                  onChange={(e) => {
+                    setEquipoRenta(e.target.value);
+                    if (e.target.value.includes('Excavadora')) {
+                      setNumEconomico('MQ-EX01');
+                      setMontoSolicitado(35000);
+                    } else if (e.target.value.includes('Retroexcavadora')) {
+                      setNumEconomico('MQ-RT04');
+                      setMontoSolicitado(28000);
+                    } else if (e.target.value.includes('Motoniveladora')) {
+                      setNumEconomico('MQ-MN02');
+                      setMontoSolicitado(45000);
+                    } else if (e.target.value.includes('Rodillo')) {
+                      setNumEconomico('MQ-VC02');
+                      setMontoSolicitado(24000);
+                    } else {
+                      setNumEconomico('MQ-CF01');
+                      setMontoSolicitado(32000);
+                    }
+                  }}
+                  className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-300 rounded-lg font-medium text-xs focus:outline-none"
+                >
+                  <option value="Excavadora de Orugas CAT 320D (20 Ton)">Excavadora CAT 320D (20T)</option>
+                  <option value="Retroexcavadora 4x4 John Deere 310L">Retroexcavadora JD 310L</option>
+                  <option value="Motoniveladora Caterpillar 120M">Motoniveladora CAT 120M</option>
+                  <option value="Rodillo Compactador Dynapac CA250">Rodillo Compactador 12T</option>
+                  <option value="Cargador Frontal CAT 938K">Cargador Frontal CAT 938K</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">No. Económico:</label>
+                <input
+                  type="text"
+                  value={numEconomico}
+                  onChange={(e) => setNumEconomico(e.target.value)}
+                  className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-300 rounded-lg font-mono font-bold text-xs"
+                />
+              </div>
+            </div>
+
+            {/* Work Site Location */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Frente de Obra / Ubicación de Entrega:
+              </label>
+              <input
+                type="text"
+                value={ubicacionObra}
+                onChange={(e) => setUbicacionObra(e.target.value)}
+                placeholder="Ej. Tramo Carretero Libramiento Sur Km 14"
+                className="w-full px-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium focus:outline-none"
+              />
             </div>
 
             {/* Loan Amount */}
@@ -409,10 +479,10 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
               </div>
             </div>
 
-            {/* Insurance & Savings Addons */}
+            {/* Insurance & Maintenance Addons */}
             <div className="grid grid-cols-2 gap-3 text-xs pt-1">
               <div>
-                <label className="block font-medium text-slate-600 mb-1">Seguro de Vida ($/sem)</label>
+                <label className="block font-medium text-slate-600 mb-1">Seguro Maquinaria ($/sem)</label>
                 <input
                   type="number"
                   value={cuotaSeguroSemanal}
@@ -422,7 +492,7 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
               </div>
 
               <div>
-                <label className="block font-medium text-slate-600 mb-1">Aporte Ahorro ($/sem)</label>
+                <label className="block font-medium text-slate-600 mb-1">Fondo Mantenimiento ($/sem)</label>
                 <input
                   type="number"
                   value={cuotaAhorroSemanal}
@@ -432,7 +502,7 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
               </div>
             </div>
 
-            {/* Authorize Credit Button */}
+            {/* Authorize Rental Button */}
             <div className="pt-3 border-t">
               <button
                 type="button"
@@ -440,7 +510,7 @@ export const GerenteView: React.FC<GerenteViewProps> = ({
                 className="w-full flex items-center justify-center gap-2 py-3 bg-[#C42326] hover:bg-[#a51c1f] text-white font-bold rounded-xl text-sm shadow-md transition active:scale-95 cursor-pointer"
               >
                 <CheckCircle2 className="w-5 h-5 text-[#F07D08]" />
-                <span>Autorizar Crédito y Generar Contrato</span>
+                <span>Autorizar Renta de Maquinaria y Generar Contrato</span>
               </button>
               <p className="text-[11px] text-center text-slate-400 mt-2">
                 Firma oficial requerida por {currentBranch.gerenteEncargado}

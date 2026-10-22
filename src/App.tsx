@@ -8,6 +8,7 @@ import {
   Branch, 
   UserAccount, 
   AuditLog, 
+  MachineryOrder,
   MotorcycleOrder 
 } from './types';
 import { storageService } from './services/storage';
@@ -24,7 +25,7 @@ import { PWAInstallModal } from './components/PWAInstallModal';
 import { CobradorView } from './views/CobradorView';
 import { GerenteView } from './views/GerenteView';
 import { AdminView } from './views/AdminView';
-import { TallerMotosView } from './views/TallerMotosView';
+import { MaquinariaPesadaView } from './views/TallerMotosView';
 
 // Helper to get default module for each role
 const getDefaultModule = (role: UserRole | null): string => {
@@ -233,7 +234,7 @@ export default function App() {
           )}
 
           {activeRole === 'taller' && (
-            <TallerMotosView
+            <MaquinariaPesadaView
               activeModule={activeModule}
               motoOrders={motoOrders}
               branches={branches}

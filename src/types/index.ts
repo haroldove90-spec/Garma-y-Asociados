@@ -52,15 +52,15 @@ export interface LoanContract {
   folio: string;
   clienteId: string;
   sucursalId: string;
-  montoSolicitado: number;
+  montoSolicitado: number; // Monto base de renta pactado
   plazoSemanas: number;
   frecuencia: PaymentFrequency;
   diaPago: PaymentDay;
   tasaInteresPorcentaje: number;
   interesTotal: number;
   ivaTotal: number;
-  seguroVidaTotal: number;
-  ahorroTotal: number;
+  seguroVidaTotal: number; // Seguro de equipo y maquinaria pesada
+  ahorroTotal: number; // Fondo de mantenimiento y garantía
   montoTotalAdeudo: number;
   cuotaPeriodica: number;
   saldoPendiente: number;
@@ -71,6 +71,13 @@ export interface LoanContract {
   aprobadoPor: string;
   tablaAmortizacion: AmortizationRow[];
   totalPagado: number;
+  // Campos específicos de Renta de Maquinaria Pesada
+  equipoRenta?: string;
+  numeroEconomico?: string;
+  horometroInicial?: number;
+  ubicacionObra?: string;
+  depositoGarantia?: number;
+  costoFleteTraslado?: number;
 }
 
 export interface PaymentTransaction {
@@ -144,17 +151,27 @@ export interface AuditLog {
   sucursalId: string;
 }
 
-export interface MotorcycleOrder {
+export interface MachineryOrder {
   id: string;
   folio: string;
-  placa: string;
-  modelo: string;
-  cobradorAsignado: string;
+  numeroEconomico: string; // e.g. MQ-01, MQ-04
+  tipoEquipo: string; // Excavadora Orugas, Retroexcavadora, Motoniveladora, Vibrocompactador, Cargador Frontal, etc.
+  modelo: string; // CAT 320D, John Deere 310L, Case 580N, etc.
+  serie: string;
+  operadorAsignado?: string;
   sucursalId: string;
   servicioSolicitado: string;
   fechaIngreso: string;
-  kilometraje: number;
+  horometro: number;
   costoEstimado: number;
-  estatus: 'En Taller' | 'Reparada' | 'En Ruta' | 'Refacciones Pendientes';
+  estatus: 'En Patio' | 'En Renta en Obra' | 'En Mantenimiento' | 'Refacciones Pendientes';
   mecanicoResponsable: string;
+  ubicacionObra?: string;
+  // Propiedades opcionales para compatibilidad
+  placa?: string;
+  kilometraje?: number;
+  cobradorAsignado?: string;
 }
+
+// Backward-compatible alias
+export type MotorcycleOrder = MachineryOrder;
